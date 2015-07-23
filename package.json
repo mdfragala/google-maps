@@ -1,0 +1,32 @@
+{
+  "name": "google-maps",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ust playing around with Google Maps.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "?.git'"
+  },
+  "author": "Mitchell",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.8.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-uglify": "^1.2.0",
+    "yargs": "^3.15.0"
+  },
+  "dependencies": {
+    "browser-sync": "^2.8.0",
+    "gulp-concat": "^2.6.0",
+    "yargs": "^3.15.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp": "^3.9.0"
+  }
+}
