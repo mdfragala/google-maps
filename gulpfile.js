@@ -9,6 +9,8 @@ var index = {
 	src: "index.html",
 	dest: "."};
 var js = {
+	json: ['./assets/**/*.{js,json}'],
+	order: ['./assets/**/_*.js', './assets/**/!(_)*.js'],
 	src: "./assets/**/*.js",
 	dest: "."};
 
@@ -17,7 +19,7 @@ var js = {
 gulp.task('serve', ['browse','watch']);
 gulp.task('watch', function(){
 	gulp.watch(index.src, ['index']);
-	gulp.watch('assets/**/*.{js,json}', ['script']);
+	gulp.watch(js.json, ['script']);
 });
 
 /***** SIMPLEX TASKS *****/
@@ -30,7 +32,7 @@ gulp.task('browse', function(){
 	});
 });
 gulp.task('script', function(){
-	return gulp.src(js.src)
+	return gulp.src(js.order)
 		.pipe($.concat('main.js'))
 		.pipe($.uglify())
 		.pipe(gulp.dest(js.dest))
