@@ -34,7 +34,7 @@ gulp.task('browse', function(){
 gulp.task('script', function(){
 	return gulp.src(js.order)
 		.pipe($.concat('main.js'))
-		.pipe($.uglify())
+		//.pipe($.uglify())
 		.pipe(gulp.dest(js.dest))
 		.pipe(browserSync.stream());
 });
