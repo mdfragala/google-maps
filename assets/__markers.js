@@ -11,9 +11,15 @@
             var index = this.list.indexOf(item);
             if (index !== -1) this.items.splice(index,1);
          },
-         find: function(callback, action) {
-            //var callbackReturn,
-
+         find: function(property, value, action) {
+            var matches = [], i = 0;
+            for (i; i < this.list.length; i++) {
+               if (this.list[i][property] === value) {
+                  matches.push(this.list[i]);
+               }
+            }
+            if (action) action.call(this, matches);
+            return matches;
          }
       };
       return Markers;

@@ -11,9 +11,15 @@
             var index = this.list.indexOf(item);
             if (index !== -1) this.items.splice(index,1);
          },
-         find: function(callback, action) {
-            //var callbackReturn,
-
+         find: function(property, value, action) {
+            var matches = [], i = 0;
+            for (i; i < this.list.length; i++) {
+               if (this.list[i][property] === value) {
+                  matches.push(this.list[i]);
+               }
+            }
+            if (action) action.call(this, matches);
+            return matches;
          }
       };
       return Markers;
@@ -35,15 +41,28 @@
          this.markers = markers.init();
       }
       Mapster.prototype = {
+         alterByProperty: function(property, value, action) {
+            var alter = action;
+            this.markers.find(property, value, function(matches){
+               matches.forEach(function(match){
+                  alter.call(match);
+               });
+            });
+         },
          setMarkers: function(Markers){
             var markers, i = 0;
             if (Markers.constructor === Array) {
                for (i; i < Markers.length; i++) {
-                  this.setMarker(Markers[i]);
+                  this._registerMarker(Markers[i]);
                }
             }
          },
          setMarker: function(options) {
+            this._registerMarker(options)
+         },
+         _registerMarker: function(options) {
+            var newMarker;
+            if (!options.hasOwnProperty('map')) options.map = this.map;
             if (!options.position) {
                options.position = {
                   lat: options.lat,
@@ -55,12 +74,7 @@
                   lng: options.position[1]
                };
             }
-            this._registerMarker(options)
-         },
-         _registerMarker: function(options) {
-            this.markers.add(options);
-            if (!options.hasOwnProperty('map')) options.map = this.map;
-            return new google.maps.Marker(options);
+            this.markers.add(new google.maps.Marker(options));
          }
       };
       return Mapster;
@@ -360,24 +374,13 @@ var Locations = [
 
    var options = mapster.OPTIONS,
    map = mapster.init(options);
-   var marker = map.setMarker({
-      lat: 42.773241,
-      lng: -71.084222,
-      title: 'Somewhere',
-      visible: true
-   });
-   var locations = [
-      {
-         title: 'Barking Dog Ale House',
-         lat: 42.7726522,
-         lng: -71.0859531,
-      },
-      {
-         title: 'Blue Finn Grille',
-         lat: 42.7725244,
-         lng: -71.0857956
-      }
-   ];
+
    var markers = map.setMarkers(Locations);
    window.Map = map;
+
+   $('header button').click(function(){
+      Map.alterByProperty('category', 'Grocery', function(){
+         this.setVisible(false);
+      });
+   });
 }(window, window.Mapster));
