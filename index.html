@@ -10,9 +10,17 @@
 	<style>
       * {margin:0;padding:0;}
       #map-canvas {height: 100vh;width: 100vw;}
+		header {
+			position: absolute;
+			z-index: 1;
+			height: 30px;
+			width: 100%;
+			background: rgba(0,0,0,0.5);
+		}
    </style>
 </head>
 <body>
+<header><button>Hide Bars/Restaurants</button></header>
 <section id="map-canvas"></section>
 <!-- Scripts -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
